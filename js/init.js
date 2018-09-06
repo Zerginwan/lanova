@@ -3,7 +3,7 @@
 // M.AutoInit();
     $('.sidenav').sidenav();
     $('.modal').modal();
-    $('.tabs').tabs({swipeable: true});
+    $('.tabs').tabs({swipeable: false});
     $('.fixed-action-btn').floatingActionButton();
     $('select').formSelect();
     $('.datepicker').datepicker({
