@@ -1,0 +1,147 @@
+<?php
+if($_SESSION["level"] == "6" || $_SESSION["level"] == "9"){
+
+$query = "SELECT * FROM level WHERE id < '9' ;";
+if ($result = mysqli_query($link, $query)) {
+                while ($row = mysqli_fetch_assoc($result)) {
+			$level_options .= '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+		}
+}
+
+$query = "SELECT * FROM docs WHERE id = '".$_GET['id']."';";
+if ($result = mysqli_query($link, $query)) {
+                while ($row = mysqli_fetch_assoc($result)) { 
+
+$level_name=$row["position"];
+                                                        
+
+
+$table = '
+  <div class="row">
+    <div id="bio" class="col s12">
+        <div class="row">
+        <div class="col s4 left">
+		<form action="php/insert_fn.php?id='.$_GET["id"].'&id2='.$_SESSION["auth_id"].'" method="post" class="form col s6">
+			<input type="text" name="fn" value="'.$row["first_name"].'" onchange="$(\'#fn1\').removeClass(\'hide\'); $(\'#fn2\').removeClass(\'hide\');">
+                          <button class="hide send right btn-small btn-floating waves-effect waves-light green" type="submit" id="fn1">
+                            <i class="material-icons">send</i>
+                          </button>
+                          <button class="hide right btn-small btn-floating  waves-effect waves-light deep-orange" type="reset" id="fn2">
+                            <i class="material-icons">undo</i>
+                          </button>
+		</form>
+                <form action="php/insert_ln.php?id='.$_GET["id"].'&id2='.$_SESSION["auth_id"].'" method="post" class="form col s6">
+                        <input type="text" name="ln" value="'.$row["last_name"].'" onchange="$(\'#ln1\').removeClass(\'hide\'); $(\'#ln2\').removeClass(\'hide\');">
+                          <button class="hide send right btn-small btn-floating waves-effect waves-light green" type="submit" id="ln1">
+                            <i class="material-icons">send</i>
+                          </button>
+                          <button class="hide right btn-small btn-floating  waves-effect waves-light deep-orange" type="reset" id="ln2">
+                            <i class="material-icons">undo</i>
+                          </button>
+                </form>
+
+
+
+               <form action="php/insert_birth.php?id='.$_GET["id"].'&id2='.$_SESSION["auth_id"].'" method="post" class="form col s6">
+                        <label>Дата рождения: </label>
+                        <input type="date" name="birth" value="'.$row["birth"].'" onchange="$(\'#birth1\').removeClass(\'hide\'); $(\'#birth2\').removeClass(\'hide\');">
+                          <button class="hide send right btn-small btn-floating waves-effect waves-light green" type="submit" id="birth1">
+                            <i class="material-icons">send</i>
+                          </button>
+                          <button class="hide right btn-small btn-floating  waves-effect waves-light deep-orange" type="reset" id="birth2">
+                            <i class="material-icons">undo</i>
+                          </button>
+                </form>    
+                <form action="php/insert_death.php?id='.$_GET["id"].'&id2='.$_SESSION["auth_id"].'" method="post" class="form col s6">
+			<label>Дата смерти: </label>
+                        <input type="date" name="death" value="'.$row["death"].'" onchange="$(\'#death1\').removeClass(\'hide\'); $(\'#death2\').removeClass(\'hide\');">
+                          <button class="hide send right btn-small btn-floating waves-effect waves-light green" type="submit" id="death1">
+                            <i class="material-icons">send</i>
+                          </button>
+                          <button class="hide right btn-small btn-floating  waves-effect waves-light deep-orange" type="reset" id="death2">
+                            <i class="material-icons">undo</i>
+                          </button>
+                </form>
+                <form action="php/insert_bp.php?id='.$_GET["id"].'&id2='.$_SESSION["auth_id"].'" method="post" class="form col s6">
+			<label>Место рождения:</label>
+                        <input type="text" name="bp" value="'.$row["birth_place"].'" onchange="$(\'#bp1\').removeClass(\'hide\'); $(\'#bp2\').removeClass(\'hide\');">
+                          <button class="hide send right btn-small btn-floating waves-effect waves-light green" type="submit" id="bp1">
+                            <i class="material-icons">send</i>
+                          </button>
+                          <button class="hide right btn-small btn-floating  waves-effect waves-light deep-orange" type="reset" id="bp2">
+                            <i class="material-icons">undo</i>
+                          </button>
+                </form>
+
+                <form action="php/insert_position.php?id='.$_GET["id"].'&id2='.$_SESSION["auth_id"].'" method="post" class="form col s6">
+                        <label>Должность:</label>
+                        <input type="text" name="position" value="'.$row["position"].'" onchange="$(\'#position1\').removeClass(\'hide\'); $(\'#position2\').removeClass(\'hide\');">
+                          <button class="hide send right btn-small btn-floating waves-effect waves-light green" type="submit" id="position1">
+                            <i class="material-icons">send</i>
+                          </button>
+                          <button class="hide right btn-small btn-floating  waves-effect waves-light deep-orange" type="reset" id="position2">
+                            <i class="material-icons">undo</i>
+                          </button>
+                </form>
+
+                <form action="php/insert_level.php?id='.$_GET["id"].'&id2='.$_SESSION["auth_id"].'" method="post" class="form col s12">
+                    <label for="select">Уровень доступа</label>
+		  <div class="input-field col s12">
+		    <select class="browser-default" id="select">
+                      <option value="" disabled selected>'.$level_name.'</option> 
+			'.$level_options.'
+		    </select>
+		  </div>
+		          <button class="hide send right btn-small btn-floating waves-effect waves-light green" type="submit" id="level1">
+                            <i class="material-icons">send</i>
+                          </button> 
+		</form>
+
+                <form action="php/insert_pass.php?id='.$_GET["id"].'&id2='.$_SESSION["auth_id"].'" method="post" class="form col s12"> 
+                  <div class="input-field col s12">         
+                        <input type="password" name="bp" value="" onchange="$(\'#pass1\').removeClass(\'hide\'); $(\'#pass2\').removeClass(\'hide\');">
+			<label>Сбросить пароль</label>
+		</div>
+                          <button class="hide send right btn-small btn-floating waves-effect waves-light green" type="submit" id="pass1">
+                            <i class="material-icons">send</i>
+                          </button>
+                </form>
+
+                <form action="php/insert_active.php?id='.$_GET["id"].'&id2='.$_SESSION["auth_id"].'" method="post" class="form col s12">
+		 <p>
+		      <label>
+                        <span>Аккаунт активен: </span>         
+		        <input type="checkbox" class="filled-in" onchange="$(\'#pass1\').removeClass(\'hide\'); $(\'#pass2\').removeClass(\'hide\');" '.$checked.' />
+		      </label>
+		    </p>
+                        <input type="password" name="bp" value="" onchange="$(\'#pass1\').removeClass(\'hide\'); $(\'#pass2\').removeClass(\'hide\');">
+                        <label>Сбросить пароль</label>
+                          <button class="hide send right btn-small btn-floating waves-effect waves-light green" type="submit" id="pass1">
+                            <i class="material-icons">send</i>
+                          </button>
+                </form>
+
+        </div>
+        <div class="col s8 right input-field">
+                <p>
+                <form action="php/insert_bio.php?id='.$_GET["id"].'&id2='.$_SESSION["auth_id"].'" method="post" class="form">
+                        <textarea type="text" name="bio" class="materialize-textarea" onchange="$(\'#bio1\').removeClass(\'hide\'); $(\'#bio2\').removeClass(\'hide\');">'.$row["bio"].'</textarea>
+                          <button class="hide right send btn-small btn-floating waves-effect waves-light green" type="submit" id="bio1">
+                            <i class="material-icons">send</i>
+                          </button>
+                          <button class="hide right btn-small btn-floating  waves-effect waves-light deep-orange" type="reset" id="bio2">
+                            <i class="material-icons">undo</i>
+                          </button>
+                </form>
+                </p>
+        </div>
+        </div>
+    </div>
+  </div>
+';
+echo $table;
+
+	}
+}
+}
+?>

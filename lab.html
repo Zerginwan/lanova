@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<?php require 'php/auth.inc'; ?>
+<html lang="en">
+<head>
+ <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Операционный центр - Главная</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body class="white">
+
+<!-- синяя полоса -->
+  <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">НИЦГиЭЛ</a>
+      <ul class="right hide-on-med-and-down">
+
+        <li>
+                <a href="tasks.html" class="breadcrumb"><i class="material-icons">archive</i>Список</a>
+        </li> 
+        <li>
+                <a href="lab_logs.html" class="breadcrumb"><i class="material-icons">history</i>Логи</a>
+        </li> 
+        <li>
+<?php
+echo $loginbutton;
+?>
+
+</li>
+      </ul>
+
+      <ul id="nav-mobile" class="sidenav">
+        <li>
+<?php
+echo $loginbutton;
+?>
+</li>
+        <li>
+                <a href="tasks.html" class="breadcrumb blue-grey-text"><i class="material-icons">archive</i>Список</a>
+        </li>
+        <li>
+                <a href="lab_logs.html" class="breadcrumb blue-grey-text"><i class="material-icons">history</i>Логи</a>
+        </li>       
+      </ul>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>  
+<!-- конец синей полосы -->
+<main>
+<div class="container">
+
+<?php 
+                require 'php/lab.inc';
+?>
+
+
+
+
+
+
+
+</div>
+</main>
+<!-- Начало футера-->
+  <footer class="page-footer light-green darken-3">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">
+<?php 
+echo $_SESSION["auth_name"];
+echo '<p>'.nameoflevel($_SESSION["level"]).'</p>';
+?>
+          </h5>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Создано для всеобщего блага
+      </div>
+    </div>
+  </footer>
+<!-- конец футера -->
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+<!-- Submit button ajax script -->
+<script type="text/javascript">
+('[class="send"]').each(function(){
+        $(this).click(function(e){
+
+                e.preventDefault();
+
+                $.ajax({
+                    type: frm.attr('method'),
+                    url: frm.attr('action'),
+                    data: frm.serialize()
+                });
+        });
+};
+</script>
+<!-- Timer script -->
+<script type="text/javascript">
+window.onload = function(){ setInterval(function(){
+                            var now = new Date();
+                            var end = new Date(<?php echo $year.', '.$month.', ',$day.', '.$hour.', '.$minute.', '.$second ?>); // главное тут передай правильное значение
+                            var offset = end - now;
+                            var hours = parseInt(offset/(1000*60*60))%24;
+                            console.log(hours);
+                            var minutes = parseInt(offset/(1000*60))%60;
+                            var seconds= parseInt(offset/(1000))%60;
+                                if (seconds < 0) {  
+                                hours = "0";
+                                seconds = "0";
+                                minutes = "0";
+                                };
+                            var myDivTime=document.getElementById("time");
+				myDivTime.innerHTML = " ";
+                        if (hours < 10) { 
+			    myDivTime.innerHTML +="0";
+                            myDivTime.innerHTML += hours;
+					}
+                        if (hours > 9) { myDivTime.innerHTML=hours;}
+                            myDivTime.innerHTML += ":" 
+                        if (minutes < 10) { myDivTime.innerHTML += "0";}
+                            myDivTime.innerHTML += minutes
+                            myDivTime.innerHTML += ":" 
+                        if (seconds < 10) { myDivTime.innerHTML += "0";}
+                            myDivTime.innerHTML += seconds;
+                            }, 1000);
+                        }
+</script>
+
+
+<!-- submit function -->
+<script type="text/javascript">
+
+('[class="submit_alert"]').each(function(){
+        $(this).click(function(e){
+
+                e.preventDefault();
+        	let isLoaded = confirm("Загрузка исследовательского материала завершена?"); 
+	
+		if (isLoaded) {
+                $.ajax({
+                    type: frm.attr('method'),
+                    url: frm.attr('action'),
+                    data: frm.serialize()
+                });
+		alert(isLoaded)
+		}
+        });
+};
+
+function confirmSubmit(formid){
+	preventDefault();
+   var taskform=document.getElementById(formid);
+	let isLoaded = confirm("Загрузка исследовательского материала завершена?");
+	alert(isLoaded);
+	if (isLoaded){ 
+<!--		taskform.submit(); -->
+}
+}
+</script>
+
+
+<!-- Modals (pop-ups) -->
+  <div id="login" class="modal">
+    <div class="modal-content">
+    <center>
+      <div class="section"></div>
+      <h5 class="indigo-text">Введите ваши данные.</h5>
+      <div class="section"></div>
+      <div class="container">
+        <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+          <form class="col s12" method="post">
+            <div class='row'>
+              <div class='col s12'>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s12'>
+                <input class='validate' type='text' name='login' id='login' />
+                <label for='email'>Ваш логин</label>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s12'>
+                <input class='validate' type='password' name='password' id='password' />
+                <label for='password'>Пароль</label>
+              </div>
+            </div>
+
+            <br />
+            <center>
+              <div class='row'>
+                <button type='submit' name='btn_login' class='modal-close col s12 btn btn-large waves-effect indigo'>Войти</button>
+              </div>
+            </center>
+          </form>
+        </div>
+      </div>
+    </center>
+    </div>
+  </div>
+<!-- End Modal -->
+
+</body>
+</html>

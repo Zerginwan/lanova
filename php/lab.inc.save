@@ -1,0 +1,121 @@
+<?php
+if ($_SESSION["level"] > 1) {
+
+$year='2000';
+$month='09';
+$day='08';
+$hour='20';
+$minute='45';
+$second ='00';
+
+$query = "SELECT id, task_name FROM tasks;";
+if ($result = mysqli_query($link, $query)) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                        $task_options .= '<option value="'.$row["id"].'">'.$row["task_name"].'</option>';
+                }
+}  
+
+
+$select_task = '
+	<div class="col s12 m5 left">
+		<div id="task_button">
+<button class="btn btn-large btn-flat waves-effect waves-light orange white-text" onclick="$(this).toggleClass(\'hide\'); $(\'#task_card\').toggleClass(\'hide\');"><i class="material-icons left">add</i>Добавить задачу</button>
+		</div>
+		<div id="task_card" class="hide card z-depth-3 grey lighten-2">
+		<form method="post" action="php/task_add.php?id='.$_SESSION["auth_id"].'">
+
+
+                    <label for="select">Выберите тип задачи</label>
+                  <div class="input-field card-content">
+                    <select name="task" id="select">
+                      <option value="" disabled selected></option>
+                        '.$task_options.'
+                    </select>
+                  </div>
+			
+	                <div class="input-field card-content">
+		                        <textarea type="text" name="comment" class="materialize-textarea flow-text" id="text"></textarea>
+                        <label for="text">Сопроводительная записка</label>    
+		        </div>    			
+			<div>
+				<button type="submit" class="btn waves-effect waves-light blue white-text right">Поставить задачу<i class="material-icons left">add</i></button>
+			</div>
+		</form>
+		<br>
+		</div>
+	</div>
+';
+
+//уровни доступа
+//if($_SESSION["level"] == 2){require 'lab/level2.php';}
+//if($_SESSION["level"] == 3){require 'lab/level3.php';}
+//if($_SESSION["level"] == 4){require 'lab/level4.php';}
+//if($_SESSION["level"] == 5){require 'lab/level5.php';}
+//if($_SESSION["level"] == 9){require 'lab/level9.php';}
+
+$query = "SELECT * FROM lab ORDER BY id DESC LIMIT 1";
+if ($result = mysqli_query($link, $query)) {
+        while ($row = mysqli_fetch_assoc($result)){
+
+if($row["state"] != 'finished' && $row['state']){
+
+	$date = strtotime($row['timestamp']);
+        $year=date('y', $date);
+        $month=date('m', $date);
+        $day=date('d', $date);
+        $hour=date('H', $date);
+        $minute=date('i', $date);
+        $second =date('s', $date);
+
+	if($_SESSION["level"] > 3){ 
+		$id = '<a href="task.html?task='.$row["id"].'">'.$row["id"].'</a>';
+	}else{
+		$id = $row["id"];
+	}
+
+	if($_SESSION["level"] > 3){
+        $approve_cancel = '<button class="btn btn-small btn-flat waves-effect waves-red white red-text"  href="php/task_cancel.php?id='.$row["id"].'">Отменить<i class="material-icons left">cancel</i></button>';
+       if($row["state"] == "waiting") {
+                $approve_cancel .= '<button class="btn btn-small btn-flat waves-effect waves-light green right white-text" href="php/task_approve.php?id='.$row["id"].'">Подтвердить<i class="material-icons left">done</i></button>';
+        }
+}       
+
+}
+
+echo '
+<div class="row">
+
+<div class ="col s12 m7 right">
+  <div class="card z-depth-4">
+    <div class="card-content">
+      <span class="card-title left">До завершения текущей задачи:  </span>
+        <div class="flow-text" id="time"> </div>
+        <div class="flow-text">
+    <div class="card-tabs">
+      <ul class="tabs tabs-fixed-width">
+        <li class="tab"><a href="#test4">Тип задачи</a></li>
+        <li class="tab"><a href="#test5">Постановщик задачи</a></li>
+        <li class="tab"><a href="#test6">UID задачи</a></li>
+      </ul>
+    </div>
+    <div class="card-content grey lighten-4">
+      <div id="test4">'.nameoftask($row["task"]).'</div>
+      <div id="test5">'.nameofid($row["created_by"]).'</div>
+      <div id="test6">'.$id.'</div>
+    </div>
+    </div>
+'.$approve_cancel.'
+ </div>
+</div>
+</div>
+'.$select_task.'
+
+</div>
+';
+
+}}
+//Рисуем табличку
+
+
+}
+?>

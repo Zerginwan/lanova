@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<?php require 'php/auth.inc'; ?>
+<html lang="en">
+<head>
+ <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Операционный центр - Главная</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body class="white">
+  <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo"> НИЦГиЭЛ</a>
+      <ul class="right hide-on-med-and-down">
+        <li>
+<?php
+echo $loginbutton;
+?>
+
+</li>
+      </ul>
+
+      <ul id="nav-mobile" class="sidenav">
+        <li>
+<?php
+echo $loginbutton;
+?>
+
+</li>
+
+      </ul>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <div class="row center">
+        <img src="https://sun9-1.userapi.com/c830109/v830109952/1853f1/X1zQJadu_0c.jpg" class="waves-effect waves-light light-green darken-3">
+      </div>    
+      <h3 class="header center light-green-text text-darken-3">Научно-исследовательский центр генетики и эпидемиологии Лановы</h3>
+      <div class="row center">
+        <h5 class="header col s12 light">Прежде чем думать о том, как сделать, подумай о том, нужно ли это делать.</h5>
+      </div>
+
+
+    </div>
+  </div>
+
+<main>
+
+<?php echo $error; ?>
+
+  <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+
+        <div class="col s12 m6 l4 offset-l2">
+          <div class="icon-block">
+            <h2 class="center blue-text "><a href="people.html"><i class="material-icons">group</i></a></h2>
+            <h5 class="center"><a href="people.html">Сотрудники</a></h5>
+
+            <p class="light">
+Личные дела персонала: анкета, трудовая история, карта психологического здоровья, медицинская карта. Для просмотра некоторых разделов необходим соответствующий уровень доступа.
+	    </p>
+          </div>
+        </div>
+
+        <div class="col s12 m6 l4 ">
+          <div class="icon-block">
+            <h2 class="center light-blue-text"><a href="lab.html"><i class="material-icons">settings</i></a></h2>
+            <h5 class="center"><a href="lab.html">Лаборатория</a></h5>
+
+            <p class="light">
+Управление задачами автоматизированного лабораторного оборудования: постановка, отмена, получение результатов. Исследуйте неизведанное на благо будущих поколений!
+	    </p>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+    <br><br>
+  </div>
+</div>
+
+</main>
+
+  <footer class="page-footer light-green darken-3 darken-4">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">
+<?php 
+if($_SESSION["is_auth"] == 'true'){
+	echo $_SESSION["auth_name"];
+	echo '<p>'.nameoflevel($_SESSION["level"]).'</p>';
+}
+?>
+	  </h5>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Создано для всеобщего блага
+      </div>
+    </div>
+  </footer>
+
+
+<!-- Modals (pop-ups) -->
+  <div id="login" class="modal">
+    <div class="modal-content">
+    <center>
+      <div class="section"></div>
+      <h5 class="indigo-text">Введите ваши данные.</h5>
+      <div class="section"></div>
+      <div class="container">
+        <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+          <form class="col s12" method="post">
+            <div class='row'>
+              <div class='col s12'>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s12'>
+                <input class='validate' type='text' name='login' id='login' />
+                <label for='email'>Ваш логин</label>
+              </div>
+            </div>
+
+            <div class='row'>
+              <div class='input-field col s12'>
+                <input class='validate' type='password' name='password' id='password' />
+                <label for='password'>Пароль</label>
+              </div>
+            </div>
+
+            <br />
+            <center>
+              <div class='row'>
+                <button type='submit' name='btn_login' class='modal-close col s12 btn btn-large waves-effect indigo'>Войти</button>
+              </div>
+            </center>
+          </form>
+        </div>
+      </div>
+    </center>
+    </div>
+  </div>
+<!-- End Modal -->
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+  </body>
+</html>
