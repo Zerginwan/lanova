@@ -3,7 +3,7 @@ session_set_cookie_params(86400);
 //$sespath = session_save_path ('/var/www/html/sessions');
 session_start(); //Запускаем сессии
 
-require 'php/mysql.inc';
+require '/var/www/lanova/php/mysql.inc';
 
 $auth_num_query = "SELECT id, pass, level, active FROM users WHERE login = '".$_POST['login']."'";
 if ($result = mysqli_query($link, $auth_num_query)) {
@@ -60,7 +60,7 @@ $loginbutton .= '<a class="waves-effect waves-light btn light-green darken-3" hr
 
 }
 function levelofid($id){
-require 'php/mysql.inc';
+require '/var/www/lanova/php/mysql.inc';
 	$level_query = "SELECT level FROM users WHERE id = '".$id."'";
 	if ($result = mysqli_query($link, $level_query)) {
 	        while ($row = mysqli_fetch_assoc($result)){
@@ -70,7 +70,7 @@ require 'php/mysql.inc';
 }
 
 function nameoflevel($level){
-require 'php/mysql.inc';
+require '/var/www/lanova/php/mysql.inc';
         $level_query = "SELECT name FROM level WHERE id = '".$level."'";
         if ($result6 = mysqli_query($link, $level_query)) {
                 while ($row6 = mysqli_fetch_assoc($result6)){
@@ -81,7 +81,7 @@ require 'php/mysql.inc';
 }
 
 function nameofid($id){
-require 'php/mysql.inc';
+require '/var/www/lanova/php/mysql.inc';
         $name_query = "SELECT first_name, last_name FROM docs WHERE id = '".$id."'";
         if ($result = mysqli_query($link, $name_query)) {
                 while ($row = mysqli_fetch_assoc($result)){
@@ -91,7 +91,7 @@ require 'php/mysql.inc';
 }
 
 function nameoftask($task){
-require 'php/mysql.inc';
+require '/var/www/lanova/php/mysql.inc';
         $task_query = "SELECT task_name FROM tasks WHERE id = '".$task."'";
         if ($result6 = mysqli_query($link, $task_query)) {
                 while ($row6 = mysqli_fetch_assoc($result6)){
@@ -102,7 +102,7 @@ require 'php/mysql.inc';
 }
 
 function timeoftask($task){
-require 'php/mysql.inc';
+require '/var/www/lanova/php/mysql.inc';
         $task_query = "SELECT task_time FROM tasks WHERE id = '".$task."'";
         if ($result6 = mysqli_query($link, $task_query)) {
                 while ($row6 = mysqli_fetch_assoc($result6)){
@@ -119,7 +119,7 @@ function russtate($task){
 }   
 
 function labnum($id){
-require 'php/mysql.inc';
+require '/var/www/lanova/php/mysql.inc';
         $labnum_query = "SELECT lab_num FROM docs WHERE id = '".$id."'";
         if ($result6 = mysqli_query($link, $labnum_query)) {
                 while ($row6 = mysqli_fetch_assoc($result6)){
@@ -129,7 +129,7 @@ require 'php/mysql.inc';
 
 } 
 function timeofid($id){
-require 'php/mysql.inc';
+require '/var/www/lanova/php/mysql.inc';
         $labnum_query = "SELECT task FROM lab WHERE id = '".$id."'";
         if ($result6 = mysqli_query($link, $labnum_query)) {
                 while ($row6 = mysqli_fetch_assoc($result6)){      

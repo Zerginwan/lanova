@@ -1,5 +1,5 @@
 <?php
-if ($_SESSION["is_auth"] == 'true' && $_SESSION["level"] > 1) {
+if ($_SESSION["is_auth"] == 'true' && $_SESSION["level"] > 4) {
 //сортировка
 if($_GET["asc"]){
 $asc=$_GET["asc"];
