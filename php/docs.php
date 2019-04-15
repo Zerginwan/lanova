@@ -9,16 +9,16 @@ if ($result = mysqli_query($link, $query)) {
 
 
 		if($row["death"]){
-			$death_str='Умер: '.$row["death"];
+			$death_str='<br>Умер: '.$row["death"];
 		}
                 if($row["birth_place"]){ 
-                        $birth_place_str='Место рождения: '.$row["birth_place"];
+                        $birth_place_str='<br>Место рождения: '.$row["birth_place"];
                 }
                 if($row["position"]){
-                        $position_str='Должность: '.$row["position"];
+                        $position_str='<br>Должность: '.$row["position"];
                 }
                 if($row["lab_num"]){
-                        $lab_str='Лаборатория №'.$row["lab_num"];
+                        $lab_str='<br>Лаборатория №'.$row["lab_num"];
                 }
 
         $med = "<h5>Нет доступа</h5>";
